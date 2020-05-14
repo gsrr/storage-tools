@@ -1,0 +1,176 @@
+.\" ----------------------------------------------------------------------------
+.\" Update the date below if you make any significant change.
+.\" Make sure there are no errors with:
+.\" groff -z -wall -b -e -t mpathpersist/mpathpersist.8
+.\"
+.\" ----------------------------------------------------------------------------
+.
+.TH MPATHPERSIST 8 2016-10-30 "Linux"
+.
+.
+.\" ----------------------------------------------------------------------------
+.SH NAME
+.\" ----------------------------------------------------------------------------
+.
+mpathpersist \- Manages SCSI persistent reservations on dm multipath devices.
+.
+.
+.\" ----------------------------------------------------------------------------
+.SH SYNOPSIS
+.\" ----------------------------------------------------------------------------
+.
+.B mpathpersist
+.RB [\| OPTIONS \|]
+.I device
+.
+.
+.\" ----------------------------------------------------------------------------
+.SH DESCRIPTION
+.\" ----------------------------------------------------------------------------
+.
+This utility is used to manage SCSI persistent reservations on Device Mapper
+Multipath devices. To be able to use this functionality, the \fIreservation_key\fR
+attribute must be defined in the \fI/etc/multipath.conf\fR file. Otherwise the
+\fBmultipathd\fR daemon will not check for persistent reservation for newly
+discovered paths or reinstated paths.
+.
+.
+.\" ----------------------------------------------------------------------------
+.SH OPTIONS
+.\" ----------------------------------------------------------------------------
+.
+.TP
+.BI \-verbose|\-v " level"
+Verbosity:
+.RS
+.TP 5
+.I 0
+Critical messages.
+.TP
+.I 1
+Error messages.
+.TP
+.I 2
+Warning messages.
+.TP
+.I 3
+Informational messages.
+.TP
+.I 4
+Informational messages with trace enabled.
+.RE
+.
+.TP
+.BI \--device=\fIDEVICE\fB|\-d " DEVICE"
+Query or change DEVICE.
+.
+.TP
+.B \--help|\-h
+Output this usage message.
+.
+.TP
+.B \--hex|\-H
+Output response in hex.
+.
+.TP
+.B \--in|\-i
+Request PR In command.
+.
+.TP
+.B \--out|\-o
+Request PR Out command.
+.
+.TP
+.B \--param-aptpl|\-Z
+PR Out parameter 'APTPL'.
+.
+.TP
+.B \--read-keys|\-k
+PR In: Read Keys.
+.
+.TP
+.BI \--param-sark=\fISARK\fB|\-S " SARK"
+PR Out parameter service action reservation key (SARK is in hex).
+.
+.TP
+.B \--preempt|\-P
+PR Out: Preempt.
+.
+.TP
+.B \--preempt-abort|\-A
+PR Out: Preempt and Abort.
+.
+.TP
+.BI \--prout-type=\fITYPE\fB|\-T " TYPE"
+PR Out command type.
+.
+.TP
+.B \--read-full-status|\-s
+PR In: Read Full Status.
+.
+.TP
+.B \--read-keys|\-k
+PR In: Read Keys.
+.
+.TP
+.B \--read-reservation|\-r
+PR In: Read Reservation.
+.
+.TP
+.B \--register|\-G
+PR Out: Register.
+.
+.TP
+.B \--register-ignore|\-I
+PR Out: Register and Ignore.
+.
+.TP
+.B \--release|\-L
+PR Out: Release.
+.
+.TP
+.B \--report-capabilities|\-c
+PR In: Report Capabilities.
+.
+.TP
+.B \--reserve|\-R
+PR Out: Reserve.
+.
+.TP
+.BI \--transport-id=\fITIDS\fB|\-X " TIDS"
+TransportIDs can be mentioned in several forms.
+.
+.
+.\" ----------------------------------------------------------------------------
+.SH EXAMPLE
+.\" ----------------------------------------------------------------------------
+.
+.TP
+Register the Service Action Reservation Key for the /dev/mapper/mpath9 device:
+\fBmpathpersist --out --register --param-sark=\fI123abc \fB--prout-type=\fI5 /dev/mapper/mpath9\fR
+.TP
+Read the Service Action Reservation Key for the /dev/mapper/mpath9 device:
+\fBmpathpersist -i -k \fI/dev/mapper/mpath9\fR
+.TP
+Reserve the Service Action Reservation Key for the /dev/mapper/mpath9 device:
+\fBmpathpersist --out --reserve --param-sark=\fI123abc \fB--prout-type=\fI8 \fB-d \fI/dev/mapper/mpath9\fR
+.TP
+Read the reservation status of the /dev/mapper/mpath9 device:
+\fBmpathpersist -i -s -d \fI/dev/mapper/mpath9\fR
+.
+.
+.\" ----------------------------------------------------------------------------
+.SH "SEE ALSO"
+.\" ----------------------------------------------------------------------------
+.
+.BR multipath (8),
+.BR multipathd (8).
+.
+.
+.\" ----------------------------------------------------------------------------
+.SH AUTHORS
+.\" ----------------------------------------------------------------------------
+.
+\fImultipath-tools\fR was developed by Christophe Varoqui <christophe.varoqui@opensvc.com>
+and others.
+.\" EOF

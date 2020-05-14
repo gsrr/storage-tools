@@ -1,0 +1,14 @@
+*.o
+.dotest
+*~
+*.so
+*.so.0
+*.a
+*.gz
+kpartx/kpartx
+multipath/multipath
+multipathd/multipathd
+mpathpersist/mpathpersist
+.nfs*
+*.swp
+*.patch
